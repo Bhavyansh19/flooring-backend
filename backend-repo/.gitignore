@@ -6,3 +6,4 @@ uploads/*
 *.log
 .DS_Store
 backend-repo/TITLES_EXCEL.xlsx
+TITLES_EXCEL.xlsx
