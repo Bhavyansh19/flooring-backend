@@ -3,6 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import path from "path";
+import passport from "passport"; // ← ADDED
+import "./passport.js";
 import { fileURLToPath } from "url";
 import connectDB from "./utils/db.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -28,6 +30,7 @@ app.use(
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 app.use("/api/auth", authRoutes);
@@ -45,6 +48,9 @@ app.use((err, req, res, next) => {
   res
     .status(err.statusCode || 500)
     .json({ success: false, message: err.message || "Server Error" });
+});
+app.get("/debug-auth", (req, res) => {
+  res.send("auth route alive");
 });
 
 const PORT = process.env.PORT || 5001;
